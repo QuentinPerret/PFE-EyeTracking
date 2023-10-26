@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on octobre 25, 2023, at 14:53
+    on octobre 25, 2023, at 16:42
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -107,7 +107,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version='',
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='C:\\Users\\Quentin\\Desktop\\PFE\\PFE_lastrun.py',
+        originPath='C:\\Users\\Quentin\\Desktop\\PFE-EyeTracking\\PFE_lastrun.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
@@ -158,7 +158,7 @@ def setupWindow(expInfo=None, win=None):
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
-            size=(1024, 768), fullscr=True, screen=0,
+            size=[1920, 1080], fullscr=True, screen=0,
             winType='pyglet', allowStencil=False,
             monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
@@ -202,6 +202,16 @@ def setupInputs(expInfo, thisExp, win):
     inputs = {}
     ioConfig = {}
     
+    # Setup eyetracking
+    ioConfig['eyetracker.hw.mouse.EyeTracker'] = {
+        'name': 'tracker',
+        'controls': {
+            'move': [],
+            'blink':('MIDDLE_BUTTON',),
+            'saccade_threshold': 0.5,
+        }
+    }
+    
     # Setup iohub keyboard
     ioConfig['Keyboard'] = dict(use_keymap='psychopy')
     
@@ -209,7 +219,7 @@ def setupInputs(expInfo, thisExp, win):
     if 'session' in expInfo:
         ioSession = str(expInfo['session'])
     ioServer = io.launchHubServer(window=win, **ioConfig)
-    eyetracker = None
+    eyetracker = ioServer.getDevice('tracker')
     
     # create a default keyboard (e.g. to check for escape)
     defaultKeyboard = keyboard.Keyboard(backend='iohub')
@@ -317,11 +327,15 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     # --- Initialize components for Routine "trial" ---
     movie = visual.MovieStim(
         win, name='movie',
-        filename='Video/ball-elongated-1.avi', movieLib='ffpyplayer',
+        filename=None, movieLib='ffpyplayer',
         loop=False, volume=1.0, noAudio=False,
         pos=(0, 0), size=(1, 1), units=win.units,
         ori=0.0, anchor='center',opacity=None, contrast=1.0,
         depth=0
+    )
+    etRecord = hardware.eyetracker.EyetrackerControl(
+        tracker=eyetracker,
+        actionType='Start and Stop'
     )
     
     # create some handy timers
@@ -336,9 +350,9 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     expInfo['expStart'] = data.getDateStr(format='%Y-%m-%d %Hh%M.%S.%f %z', fractionalSecondDigits=6)
     
     # set up handler to look after randomisation of conditions etc
-    trials = data.TrialHandler(nReps=5.0, method='random', 
+    trials = data.TrialHandler(nReps=2.0, method='random', 
         extraInfo=expInfo, originPath=-1,
-        trialList=[None],
+        trialList=data.importConditions('data.csv'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -368,8 +382,9 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         continueRoutine = True
         # update component parameters for each repeat
         thisExp.addData('trial.started', globalClock.getTime())
+        movie.setMovie(videos)
         # keep track of which components have finished
-        trialComponents = [movie]
+        trialComponents = [movie, etRecord]
         for thisComponent in trialComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
@@ -384,7 +399,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         
         # --- Run Routine "trial" ---
         routineForceEnded = not continueRoutine
-        while continueRoutine and routineTimer.getTime() < 1.0:
+        while continueRoutine:
             # get current time
             t = routineTimer.getTime()
             tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -407,20 +422,33 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                 movie.status = STARTED
                 movie.setAutoDraw(True)
                 movie.play()
+            if movie.isFinished:  # force-end the Routine
+                continueRoutine = False
+            # *etRecord* updates
             
-            # if movie is stopping this frame...
-            if movie.status == STARTED:
+            # if etRecord is starting this frame...
+            if etRecord.status == NOT_STARTED and t >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                etRecord.frameNStart = frameN  # exact frame index
+                etRecord.tStart = t  # local t and not account for scr refresh
+                etRecord.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(etRecord, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.addData('etRecord.started', t)
+                # update status
+                etRecord.status = STARTED
+            
+            # if etRecord is stopping this frame...
+            if etRecord.status == STARTED:
                 # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > movie.tStartRefresh + 1.0-frameTolerance:
+                if tThisFlipGlobal > etRecord.tStartRefresh + 1.0-frameTolerance:
                     # keep track of stop time/frame for later
-                    movie.tStop = t  # not accounting for scr refresh
-                    movie.frameNStop = frameN  # exact frame index
+                    etRecord.tStop = t  # not accounting for scr refresh
+                    etRecord.frameNStop = frameN  # exact frame index
                     # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'movie.stopped')
+                    thisExp.addData('etRecord.stopped', t)
                     # update status
-                    movie.status = FINISHED
-                    movie.setAutoDraw(False)
-                    movie.stop()
+                    etRecord.status = FINISHED
             
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -449,17 +477,17 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                 thisComponent.setAutoDraw(False)
         thisExp.addData('trial.stopped', globalClock.getTime())
         movie.stop()  # ensure movie has stopped at end of Routine
-        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-        if routineForceEnded:
-            routineTimer.reset()
-        else:
-            routineTimer.addTime(-1.000000)
+        # make sure the eyetracker recording stops
+        if etRecord.status != FINISHED:
+            etRecord.status = FINISHED
+        # the Routine "trial" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
         thisExp.nextEntry()
         
         if thisSession is not None:
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
-    # completed 5.0 repeats of 'trials'
+    # completed 2.0 repeats of 'trials'
     
     
     # mark experiment as finished

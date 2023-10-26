@@ -1,0 +1,46 @@
+3.8946 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, backgroundFit=<method-wrapper '__getattribute__' of attributeSetter object at 0x00000274CAE052E0>, backgroundImage=<method-wrapper '__getattribute__' of attributeSetter object at 0x00000274CAE05250>, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x00000274CAE050A0>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x00000274D56532B0>, multiSample=False, name='window1', numSamples=2, pos=(0, 0), screen=0, size=array([1920, 1080]), stencilBits=0, stereo=False, title='PsychoPy', units='height', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+3.8947 	EXP 	window1: mouseVisible = True
+3.8947 	EXP 	window1: backgroundImage = ''
+3.8947 	EXP 	window1: backgroundFit = 'none'
+3.8957 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+3.8957 	EXP 	window1: recordFrameIntervals = False
+4.0611 	EXP 	window1: recordFrameIntervals = True
+4.2448 	EXP 	Screen (0) actual frame rate measured at 59.89Hz
+4.2448 	EXP 	window1: recordFrameIntervals = False
+4.2448 	EXP 	window1: mouseVisible = False
+5.9540 	EXP 	PFE: status = STARTED
+5.9552 	EXP 	window1: mouseVisible = True
+0.0736 	EXP 	movie: autoLog = True
+0.0739 	EXP 	Created sequence: random, trialTypes=1, nReps=5, seed=None
+0.0740 	EXP 	New trial (rep=0, index=0): None
+0.0843 	EXP 	eyetracker.clearEvents()
+0.0845 	EXP 	eyetracker.setRecordingState(True)
+0.0908 	EXP 	movie: autoDraw = True
+1.1457 	EXP 	eyetracker.setRecordingState(False)
+1.1459 	EXP 	New trial (rep=1, index=0): None
+1.1883 	EXP 	eyetracker.clearEvents()
+1.1885 	EXP 	eyetracker.setRecordingState(True)
+1.1916 	EXP 	movie: autoDraw = False
+1.1916 	EXP 	movie: autoDraw = True
+2.1246 	EXP 	eyetracker.setRecordingState(False)
+2.1248 	EXP 	New trial (rep=2, index=0): None
+2.1674 	EXP 	eyetracker.clearEvents()
+2.1678 	EXP 	eyetracker.setRecordingState(True)
+2.1732 	EXP 	movie: autoDraw = False
+2.1732 	EXP 	movie: autoDraw = True
+3.1457 	EXP 	eyetracker.setRecordingState(False)
+3.1459 	EXP 	New trial (rep=3, index=0): None
+3.1884 	EXP 	eyetracker.clearEvents()
+3.1889 	EXP 	eyetracker.setRecordingState(True)
+3.1957 	EXP 	movie: autoDraw = False
+3.1957 	EXP 	movie: autoDraw = True
+4.1246 	EXP 	eyetracker.setRecordingState(False)
+4.1248 	EXP 	New trial (rep=4, index=0): None
+4.1674 	EXP 	eyetracker.clearEvents()
+4.1678 	EXP 	eyetracker.setRecordingState(True)
+4.1729 	EXP 	movie: autoDraw = False
+4.1729 	EXP 	movie: autoDraw = True
+5.1457 	EXP 	eyetracker.setRecordingState(False)
+5.1495 	EXP 	movie: autoDraw = False
+5.1495 	EXP 	PFE: status = STOPPED
+5.1745 	EXP 	window1: mouseVisible = True
