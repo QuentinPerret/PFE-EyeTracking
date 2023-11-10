@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on octobre 25, 2023, at 16:42
+    on novembre 10, 2023, at 13:35
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -133,10 +133,6 @@ def setupLogging(filename):
     """
     # this outputs to the screen, not a file
     logging.console.setLevel(logging.EXP)
-    # save a log file for detail verbose info
-    logFile = logging.LogFile(filename+'.log', level=logging.EXP)
-    
-    return logFile
 
 
 def setupWindow(expInfo=None, win=None):
@@ -203,12 +199,21 @@ def setupInputs(expInfo, thisExp, win):
     ioConfig = {}
     
     # Setup eyetracking
-    ioConfig['eyetracker.hw.mouse.EyeTracker'] = {
+    ioConfig['eyetracker.hw.pupil_labs.pupil_core.EyeTracker'] = {
         'name': 'tracker',
-        'controls': {
-            'move': [],
-            'blink':('MIDDLE_BUTTON',),
-            'saccade_threshold': 0.5,
+        'runtime_settings': {
+            'pupillometry_only': False,
+            'surface_name': 'psychopy_iohub_surface',
+            'confidence_threshold': 0.8,
+            'pupil_remote': {
+                'ip_address': '127.0.0.1',
+                'port': 50020.0,
+                'timeout_ms': 1000.0,
+            },
+            'pupil_capture_recording': {
+                'enabled': True,
+                'location': '',
+            }
         }
     }
     
@@ -538,7 +543,6 @@ def endExperiment(thisExp, inputs=None, win=None):
     if inputs is not None:
         if 'eyetracker' in inputs and inputs['eyetracker'] is not None:
             inputs['eyetracker'].setConnectionState(False)
-    logging.flush()
 
 
 def quit(thisExp, win=None, inputs=None, thisSession=None):
@@ -564,7 +568,6 @@ def quit(thisExp, win=None, inputs=None, thisSession=None):
     if inputs is not None:
         if 'eyetracker' in inputs and inputs['eyetracker'] is not None:
             inputs['eyetracker'].setConnectionState(False)
-    logging.flush()
     if thisSession is not None:
         thisSession.stop()
     # terminate Python process
