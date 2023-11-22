@@ -125,7 +125,7 @@
         <Param val="time (s)" valType="str" updates="None" name="startType"/>
         <Param val="0.0" valType="code" updates="None" name="startVal"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="1.0" valType="code" updates="constant" name="stopVal"/>
+        <Param val="8.0" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="syncScreenRefresh"/>
       </EyetrackerRecordComponent>
     </Routine>
@@ -308,7 +308,6 @@
     </Routine>
   </Routines>
   <Flow>
-    <EyetrackerCalibrationRoutine name="calibration_1"/>
     <LoopInitiator loopType="TrialHandler" name="sessions">
       <Param name="Selected rows" updates="None" val="" valType="str"/>
       <Param name="conditions" updates="None" val="None" valType="str"/>

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on novembre 21, 2023, at 16:25
+    on novembre 22, 2023, at 15:15
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -589,7 +589,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                 # if etRecord is stopping this frame...
                 if etRecord.status == STARTED:
                     # is it time to stop? (based on global clock, using actual start)
-                    if tThisFlipGlobal > etRecord.tStartRefresh + 1.0-frameTolerance:
+                    if tThisFlipGlobal > etRecord.tStartRefresh + 8.0-frameTolerance:
                         # keep track of stop time/frame for later
                         etRecord.tStop = t  # not accounting for scr refresh
                         etRecord.frameNStop = frameN  # exact frame index
