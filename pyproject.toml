@@ -8,11 +8,15 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
 numpy = "^1.26.1"
-pandas = "^2.1.1"
-ipykernel = "^6.26.0"
+pandas = ">=1.4.1,<2.0.0"
 jupyter = "^1.0.0"
 matplotlib = "^3.8.0"
 bokeh = "^3.3.0"
+pyglui = "^1.31.1"
+rich = "^13.7.0"
+opencv-python = "^4.8.1.78"
+msgpack = "^1.0.7"
+pupil = "^0.2.0"
 
 
 
