@@ -5,7 +5,8 @@ import numpy as np
 import pandas as pd
 
 # %%
-root = "video/Videos - mask/"
+root = "../video/Videos - mask/"
+
 import os
 
 path_mask_videos = []
@@ -39,7 +40,7 @@ def gravityCenter(frame, viz=False):
         plt.title("Image avec le centre de gravité")
         plt.show()
 
-    return centre_x / 1080, centre_y / 1920
+    return centre_x / 1920, centre_y / 1080
 
 
 # %%
@@ -56,4 +57,6 @@ def getAllGravityCenter(video_path: str) -> list:
     return gravity_center
 
 
-df["objectCenter"] = df.apply(lambda x: getAllGravityCenter(x["maskPath"]), axis=1)
+df['objectCenter'] = df.apply(lambda x: getAllGravityCenter(x["maskPath"]), axis=1)
+
+# %%
