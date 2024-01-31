@@ -38,22 +38,31 @@ def buildOneHotEncoding(df):
 
 
 # %%
-df = openPsychoPyExperimentMetadata("../data/188563_PFE_2024-01-29_18h07.46.466.csv")
+df = pd.DataFrame()
+folder_path = '../data'
+
+# List all files in the folder
+files = os.listdir(folder_path)
+
+# Print each file name
+for file in files:
+    df2 = openPsychoPyExperimentMetadata(f"../data/{file}")
+    df = pd.concat([df, df2], axis=0, ignore_index=True)
+
+
+
 df = df.apply(lambda x: buildOneHotEncoding(x), axis=1)
 t0 = df["trial.started"][0]
 df["trial.started"] = df.apply(lambda x: x["trial.started"] - t0, axis=1)
 df["trial.stopped"] = df.apply(lambda x: x["trial.stopped"] - t0, axis=1)
 
 # %%
-gaze_positions = pd.read_csv("../pupil_data/gaze_positions.csv")
-t0 = gaze_positions.gaze_timestamp[0]
-gaze_positions.gaze_timestamp = gaze_positions.apply(
-    lambda x: x.gaze_timestamp - t0, axis=1
-)
-
-
-# %%
 def retrieve_gaze_positions(df):
+    gaze_positions = pd.read_csv(f"../pupil_data/{df.participant}_gaze_positions.csv")
+    t0 = gaze_positions.gaze_timestamp[0]
+    gaze_positions.gaze_timestamp = gaze_positions.apply(
+        lambda x: x.gaze_timestamp - t0, axis=1
+    )
     gaze = gaze_positions[
         (gaze_positions["gaze_timestamp"] >= df["trial.started"])
         & (gaze_positions["gaze_timestamp"] < df["trial.stopped"])
@@ -66,3 +75,5 @@ def retrieve_gaze_positions(df):
 
 
 df = df.apply(lambda x: retrieve_gaze_positions(x), axis=1)
+
+# %%

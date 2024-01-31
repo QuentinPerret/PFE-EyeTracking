@@ -17,7 +17,7 @@ from utils.objectCenter import df as objectCenter
 def retrieveGazePosition(row):
     # folder = f"{row['participant']}_{row['session']}_"
     folder = f"00{row.name}" if row.name < 10 else f"0{row.name}"
-    csv_path = "../pupil_data/" + folder + "/gaze_positions.csv"
+    csv_path = f"../pupil_data/" + folder + "/gaze_positions.csv"
     df = pd.read_csv(csv_path, sep=(","))
 
     x = df.pos_x.to_list()
@@ -190,7 +190,7 @@ def get_fixations(df):
     return f
 
 
-def make_video(df):
+def make_video(df,i):
     f = df.fixations
     # Open the video file
     video_path = df.videos
@@ -204,7 +204,7 @@ def make_video(df):
 
     # Define the codec and create a VideoWriter object
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")  # You can use other codecs like 'XVID'
-    output_path = "../output_video.mp4"
+    output_path = f"../output_video/{i}.mp4"
     out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
     # Check if the VideoWriter is opened successfully
